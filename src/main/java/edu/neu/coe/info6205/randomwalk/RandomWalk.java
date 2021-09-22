@@ -20,7 +20,10 @@ public class RandomWalk {
      * @param dy the distance he moves in the y direction
      */
     private void move(int dx, int dy) {
-        // TO BE IMPLEMENTED
+    	// TO BE IMPLEMENTED
+        // update the values of x and y in every move
+    	x=x+dx;
+    	y=y+dy;
     }
 
     /**
@@ -29,7 +32,9 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // TO BE IMPLEMENTED
+    	// TO BE IMPLEMENTED 
+        // perform random moves for m steps
+    	for(int i=0;i<m;i++) randomMove();
     }
 
     /**
@@ -49,7 +54,8 @@ public class RandomWalk {
      */
     public double distance() {
         // TO BE IMPLEMENTED
-        return 0;
+    	// calculating the euclidian distance in each move
+        return Math.sqrt((x*x)+(y*y));
     }
 
     /**
