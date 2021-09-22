@@ -54,7 +54,7 @@ public class RandomWalk {
      */
     public double distance() {
         // TO BE IMPLEMENTED
-    	// calculating the euclidian distance in each move
+    	// calculating the distance (Euclidian) from the origin to the point in each move
         return Math.sqrt((x*x)+(y*y));
     }
 
