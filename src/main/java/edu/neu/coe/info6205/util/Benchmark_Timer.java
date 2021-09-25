@@ -4,10 +4,13 @@
 
 package edu.neu.coe.info6205.util;
 
+import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
+
+import edu.neu.coe.info6205.sort.elementary.InsertionSort;
 
 import static edu.neu.coe.info6205.util.Utilities.formatWhole;
 
@@ -125,4 +128,94 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
     private final Consumer<T> fPost;
 
     final static LazyLogger logger = new LazyLogger(Benchmark_Timer.class);
+    
+    public static void main(String[] args) {
+        Random random = new Random();
+        int m = 50;   // number of runs
+
+        System.out.println("Benchmarking the randomly ordered array for atleast 5 values of n");
+        System.out.println();
+        int randArrLen=5000;
+        for (int i = 0; i < 5; i++) {
+        	randArrLen *= 2;
+            //Filling the array with random numbers
+            Integer[] arr=new Integer[randArrLen];
+            for(int j=0;j<arr.length;j++) arr[j]=random.nextInt();
+            //consumer function to be passed as an argument of the constructor of Benchmark_Timer class
+            InsertionSort<Integer> insertionSort = new InsertionSort<>();
+            Consumer<Integer[]> consumer = (ar) -> {
+            	insertionSort.sort(ar, 0, ar.length);
+            };
+            consumer.accept(arr);
+            Benchmark_Timer<Integer[]> benchTimer = new Benchmark_Timer<>("Benchmarking sort(Insertion) function for array with random elements of length : " + randArrLen, consumer);
+            System.out.println(benchTimer.run(arr, m));
+            
+        }
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+        
+        System.out.println("Benchmarking the ordered array for atleast 5 values of n");
+        System.out.println();
+        randArrLen=5000;
+        for (int i = 0; i < 5; i++) {
+        	randArrLen *= 2;
+            //Filling the array with sorted numbers
+            Integer[] arr=new Integer[randArrLen];
+            for(int j=0;j<arr.length;j++) arr[j]=j;
+            //consumer function to be passed as an argument of the constructor of Benchmark_Timer class
+            InsertionSort<Integer> insertionSort = new InsertionSort<>();
+            Consumer<Integer[]> consumer = (ar) -> {
+            	insertionSort.sort(ar, 0, ar.length);
+            };
+            consumer.accept(arr);
+            Benchmark_Timer<Integer[]> benchTimer = new Benchmark_Timer<>("Benchmarking sort(Insertion) function for array with ordered elements of length : " + randArrLen, consumer);
+            System.out.println(benchTimer.run(arr, m));
+        }
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+        
+        System.out.println("Benchmarking the reverse ordered array for atleast 5 values of n");
+        System.out.println();
+        randArrLen=5000;
+        for (int i = 0; i < 5; i++) {
+        	randArrLen *= 2;
+            //Filling the array with reverse ordered numbers
+            Integer[] arr=new Integer[randArrLen];
+            int index=0;
+            for(int j=arr.length-1;j>=0;j--) arr[index++]=j;
+            //consumer function to be passed as an argument of the constructor of Benchmark_Timer class
+            InsertionSort<Integer> insertionSort = new InsertionSort<>();
+            Consumer<Integer[]> consumer = (ar) -> {
+            	insertionSort.sort(ar, 0, ar.length);
+            };
+            consumer.accept(arr);
+            Benchmark_Timer<Integer[]> benchTimer = new Benchmark_Timer<>("Benchmarking sort(Insertion) function for array with reverse ordered elements of length : " + randArrLen, consumer);
+            System.out.println(benchTimer.run(arr, m));
+        }
+        System.out.println("----------------------------------------------------------------------------------------------------------------------------------");
+        
+        System.out.println("Benchmarking the partially ordered array for atleast 5 values of n");
+        System.out.println();
+        randArrLen=5000;
+        for (int i = 0; i < 5; i++) {
+        	randArrLen *= 2;
+            //Filling the array with partially ordered numbers
+            Integer[] arr=new Integer[randArrLen];
+            int index=0;
+            for(int j=0;j<arr.length;j++) {
+            	if(j<arr.length/2) {
+            		arr[j]=random.nextInt();
+            	}else {
+            		arr[j]=j;
+            	}
+            }
+            //consumer function to be passed as an argument of the constructor of Benchmark_Timer class
+            InsertionSort<Integer> insertionSort = new InsertionSort<>();
+            Consumer<Integer[]> consumer = (ar) -> {
+            	insertionSort.sort(ar, 0, ar.length);
+            };
+            consumer.accept(arr);
+            Benchmark_Timer<Integer[]> benchTimer = new Benchmark_Timer<>("Benchmarking sort(Insertion) function for array with partially ordered elements of length : " + randArrLen, consumer);
+            System.out.println(benchTimer.run(arr, m));
+        }
+        System.out.println("-----------------------------------------------------------END-----------------------------------------------------------------------");
+    }
 }
