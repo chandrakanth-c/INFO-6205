@@ -74,15 +74,20 @@ public class RandomWalk {
         }
         return totalDistance / n;
     }
-
+    
     public static void main(String[] args) {
-        if (args.length == 0)
-            throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        int m = Integer.parseInt(args[0]);
-        int n = 30;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        double meanDistance = randomWalkMulti(m, n);
-        System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
-    }
+		int[] mArr=new int[] {10,100,1000,10000,100000,1000000};
+		int n=30;
+		for(int i:mArr) {
+			double mean=0.0;
+			for(int j=0;j<10;j++) {
+				double meanDistance = randomWalkMulti(i, n);
+				mean+=meanDistance;
+		        System.out.println(i + " steps: " + meanDistance + " over " + n + " experiments");
+			}
+			System.out.println("Mean distance: "+mean/10);
+			System.out.println("------------------------------------------------------------------------------");
+		}
+	}
 
 }
