@@ -131,7 +131,7 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
     
     public static void main(String[] args) {
         Random random = new Random();
-        int m = 50;   // number of runs
+        int m = 50;
 
         System.out.println("Benchmarking the randomly ordered array for atleast 5 values of n");
         System.out.println();
@@ -147,8 +147,8 @@ public class Benchmark_Timer<T> implements Benchmark<T> {
             	insertionSort.sort(ar, 0, ar.length);
             };
             consumer.accept(arr);
-            Benchmark_Timer<Integer[]> benchTimer = new Benchmark_Timer<>("Benchmarking sort(Insertion) function for array with random elements of length : " + randArrLen, consumer);
-            System.out.println(benchTimer.run(arr, m));
+            Benchmark_Timer<Integer[]> benchmarkTimer = new Benchmark_Timer<>("Benchmarking sort(Insertion) function for array with random elements of length : " + randArrLen, consumer);
+            System.out.println(benchmarkTimer.run(arr, m));
             
         }
         System.out.println("----------------------------------------------------------------------------------------------------------------------------------");

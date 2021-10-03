@@ -8,6 +8,8 @@
 package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
+import java.util.Random;
+import java.util.Scanner;
 
 /**
  * Height-weighted Quick Union with Path Compression
@@ -82,6 +84,8 @@ public class UF_HWQUPC implements UF {
         validate(p);
         int root = p;
         // TO BE IMPLEMENTED
+        while (root != parent[root]) root = parent[root];
+        if (pathCompression) doPathCompression(p);
         return root;
     }
 
@@ -166,9 +170,20 @@ public class UF_HWQUPC implements UF {
     private final int[] height;   // height[i] = height of subtree rooted at i
     private int count;  // number of components
     private boolean pathCompression;
+    private int n;
 
     private void mergeComponents(int i, int j) {
         // TO BE IMPLEMENTED make shorter root point to taller one
+    	if (i == j) return;
+        if (height[i] < height[j]) {
+            parent[i] = j;
+        } else if (height[i] > height[j]) {
+            parent[j] = i;
+        } else {
+            parent[j] = i;
+            height[i]++;
+        }
+    	
     }
 
     /**
@@ -176,5 +191,35 @@ public class UF_HWQUPC implements UF {
      */
     private void doPathCompression(int i) {
         // TO BE IMPLEMENTED update parent to value of grandparent
+    	while (i != parent[i]) {
+            parent[i] = parent[parent[i]];
+            i = parent[i];
+        }
+        return;
+    }
+    
+    public static int countPairs(int n) {
+        UF_HWQUPC u = new UF_HWQUPC(n);
+        Random random = new Random();
+        int pairs = 0;
+        for(int k =0;k<1000;k++){
+            while(u.components()!=1){
+                int rFirst = random.nextInt(n);
+                int rSecond = random.nextInt(n);
+                pairs++;
+                if(!u.connected(rFirst, rSecond))
+                    u.union(rFirst, rSecond);
+            }
+        }
+        return pairs;
+    }
+
+
+    public static void main(String[] args) {
+    	int[] objectArr = new int[]{100,200,400,800,1600,3200,6400,12800,25600,51200};
+        for(int i:objectArr){
+            int pairs = countPairs(i);
+            System.out.println("The number of Sites are:"+i+" and the number of Pairs are:"+pairs);
+        }
     }
 }
