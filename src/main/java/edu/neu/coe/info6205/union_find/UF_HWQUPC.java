@@ -83,9 +83,14 @@ public class UF_HWQUPC implements UF {
     public int find(int p) {
         validate(p);
         int root = p;
-        // TO BE IMPLEMENTED
+        // 1st pass to get the root
         while (root != parent[root]) root = parent[root];
-        if (pathCompression) doPathCompression(p);
+        // 2nd pass to make each object's parent on the path as root
+        while(p!=root) {
+        	int pParent=parent[p];
+        	parent[p]=root;
+        	p=pParent;
+        }
         return root;
     }
 
@@ -190,7 +195,7 @@ public class UF_HWQUPC implements UF {
      * This implements the single-pass path-halving mechanism of path compression
      */
     private void doPathCompression(int i) {
-        // TO BE IMPLEMENTED update parent to value of grandparent
+        // update parent to value of grandparent
     	while (i != parent[i]) {
             parent[i] = parent[parent[i]];
             i = parent[i];
@@ -219,7 +224,7 @@ public class UF_HWQUPC implements UF {
     	int[] objectArr = new int[]{100,200,400,800,1600,3200,6400,12800,25600,51200};
         for(int i:objectArr){
             int pairs = countPairs(i);
-            System.out.println("The number of Sites are:"+i+" and the number of Pairs are:"+pairs);
+            System.out.println("The number of Sites are:"+i+" and the number of Pairs/Connections are:"+pairs);
         }
     }
 }
