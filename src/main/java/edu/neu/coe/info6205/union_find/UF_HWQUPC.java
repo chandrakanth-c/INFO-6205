@@ -7,6 +7,8 @@
  */
 package edu.neu.coe.info6205.union_find;
 
+import java.util.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -22,6 +24,7 @@ public class UF_HWQUPC implements UF {
      * @param q the integer representing the other site
      */
     public void connect(int p, int q) {
+    	List<Integer> list=new ArrayList<>();
         if (!isConnected(p, q)) union(p, q);
     }
 
